@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 // create schema
 const UserSchema = new Schema({
   name: String,
+  postCount: Number,
 });
 
 // create model
