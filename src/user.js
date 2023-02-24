@@ -22,6 +22,14 @@ UserSchema.virtual('postCount').get(function () {
   return this.posts.length;
 });
 
+UserSchema.pre('remove', function (next) {
+  // pull an another model out of Mongoose that has already been registered.
+  const BlogPost = mongoose.model('blogPost');
+
+  // this === joe
+  BlogPost.deleteMany({ _id: { $in: this.blogPosts } }).then(() => next());
+});
+
 // create model
 // if there is no user collection, mongoose will create it.
 const User = mongoose.model('user', UserSchema);
